@@ -12,35 +12,33 @@ public class Main {
             " officia deserunt mollit anim id est laborum.";
 
     public static void main(String[] args) {
-        String[] listOfWords = text.split("");
-        Map<String, Integer> map = new HashMap<>();
-
-        for (String word : listOfWords) {
-            if (isLetter(word) || word.equals(" ")) {
+        Map<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < text.length(); i++) {
+            char word = text.charAt(i);
+            if (isLetter(word) || word == ' ') {
                 continue;
             }
             if (map.containsKey(word)) {
-                int i = map.get(word) + 1;
-                map.put(word, i);
+                int j = map.get(word) + 1;
+                map.put(word, j);
             } else {
                 map.put(word, 1);
             }
         }
 
-        System.out.println("Максимальное кол-во - " + max(map, listOfWords) + " " + map.get(max(map, listOfWords)));
-        System.out.println("Минимальное кол-во - " + min(map, listOfWords) + " " + map.get(min(map, listOfWords)));
+        System.out.println("Максимальное кол-во - " + max(map, text) + " " + map.get(max(map, text)));
+        System.out.println("Минимальное кол-во - " + min(map, text) + " " + map.get(min(map, text)));
     }
 
-    public static boolean isLetter(String aChar) {
-        char[] chars = aChar.toCharArray();
-        return !Character.isLetter(chars[0]);
+    public static boolean isLetter(char aChar) {
+        return !Character.isLetter(aChar);
     }
 
-    public static String max(Map<String, Integer> map, String[] listOfWords) {
+    public static char max(Map<Character, Integer> map, String text) {
         int maxValue = Integer.MIN_VALUE;
-        String maxKey = "";
-        for (Map.Entry<String, Integer> word : map.entrySet()) {
-            if (!word.getKey().equals(" ") && maxValue < word.getValue()) {
+        char maxKey = 0;
+        for (Map.Entry<Character, Integer> word : map.entrySet()) {
+            if (maxValue < word.getValue()) {
                 maxValue = word.getValue();
                 maxKey = word.getKey();
             }
@@ -48,11 +46,11 @@ public class Main {
         return maxKey;
     }
 
-    public static String min(Map<String, Integer> map, String[] listOfWords) {
+    public static char min(Map<Character, Integer> map, String text) {
         int minValue = Integer.MAX_VALUE;
-        String minKey = "";
-        for (Map.Entry<String, Integer> word : map.entrySet()) {
-            if (!word.getKey().equals(" ") && minValue > word.getValue()) {
+        char minKey = 0;
+        for (Map.Entry<Character, Integer> word : map.entrySet()) {
+            if (minValue > word.getValue()) {
                 minValue = word.getValue();
                 minKey = word.getKey();
             }
